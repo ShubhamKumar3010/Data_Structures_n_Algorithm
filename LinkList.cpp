@@ -8,6 +8,7 @@ Node* deleteNode(Node *head, int position);
 int recursiveLength(Node *head);
 Node* insertNodeRecursive(Node *head,int position,int data);
 Node* deleteNodeRecursive(Node *head,int position);
+int indexOfSearchedElement(Node *head,int n);
 using namespace std;
 void  print(Node *n){
     Node *temp=n;
@@ -28,16 +29,20 @@ int main() {
     n3.next=&n4;
     n4.next=&n5;
     print(&n1);
-    //It will take input in Order of n^2 as there is nested while loop.
-        //Node* head=takeInput();
-        //print(head);
-        // It will take input in Order of n as there is no nested while loop.
+        //It will take input in Order of n^2 as there is nested while loop.
+        //Node* head=takeInput()
+        //It will take input in Order of n as there is no nested while loop.
     Node* head2=takeInput2();
     print(head2);
-    Node* head=insertNodeRecursive(head2,3,10);
+    Node* head=insertNodeRecursive(head2,2,10);
     print(head);
     deleteNodeRecursive(head,2);
     print(head);
+    int n;
+    cout<<"Enter element to be searched:";
+    cin>>n;
+    int a=indexOfSearchedElement(head,n);
+    cout<<a;
 }
 Node* deleteNodeRecursive(Node *head,int position){
     Node* temp=head;
@@ -52,6 +57,18 @@ Node* deleteNodeRecursive(Node *head,int position){
     Node *attach =deleteNodeRecursive(head->next,position-1);
     head->next = attach;
     return head;
+}
+int indexOfSearchedElement(Node *head,int n){
+    Node* temp = head;
+    int count=0;
+    while(temp!=NULL){
+        if(temp->data==n){
+            return count;
+        }
+        temp=temp->next;
+        count++;
+    }
+    return -1;
 }
 Node* insertNodeRecursive(Node *head,int position,int data){
     Node *temp=head;
