@@ -1,4 +1,4 @@
-#include <iostream>
+ #include <iostream>
 #include "LLTakeInput2.h"
 
 void findIthValue(Node *pNode, int i);
@@ -9,6 +9,8 @@ int recursiveLength(Node *head);
 Node* insertNodeRecursive(Node *head,int position,int data);
 Node* deleteNodeRecursive(Node *head,int position);
 int indexOfSearchedElement(Node *head,int n);
+Node* appendLL(Node* head,int position);
+Node* eliminateDuplicate(Node* head);
 using namespace std;
 void  print(Node *n){
     Node *temp=n;
@@ -32,17 +34,47 @@ int main() {
         //It will take input in Order of n^2 as there is nested while loop.
         //Node* head=takeInput()
         //It will take input in Order of n as there is no nested while loop.
-    Node* head2=takeInput2();
-    print(head2);
-    Node* head=insertNodeRecursive(head2,2,10);
+    Node* head=takeInput2();
     print(head);
-    deleteNodeRecursive(head,2);
+    eliminateDuplicate(head);
     print(head);
-    int n;
-    cout<<"Enter element to be searched:";
-    cin>>n;
-    int a=indexOfSearchedElement(head,n);
-    cout<<a;
+}
+Node* eliminateDuplicate(Node* head){
+    Node* forward=head->next;
+    Node* backward=head;
+    while(forward!=NULL){
+        if(backward->data == forward->data){
+            backward->next=forward->next;
+            forward=forward->next;
+        }
+        else{
+            forward=forward->next;
+            backward=backward->next;
+        }
+    }
+    return head;
+}
+Node* appendLL(Node* head,int position){
+    Node* temp=head;
+    Node* newHead=head;
+    Node* connect=head;
+    Node* tail=head;
+    int length=recursiveLength(head);
+    int count=0;
+    while(count<position-1 && count<length){
+        newHead=newHead->next;
+        count++;
+    }
+    while(connect->next!=NULL){
+        connect=connect->next;
+    }
+    while(tail->next!=newHead){
+        tail=tail->next;
+    }
+    tail->next=NULL;
+    connect->next=temp;
+    head=newHead;
+    return head;
 }
 Node* deleteNodeRecursive(Node *head,int position){
     Node* temp=head;
