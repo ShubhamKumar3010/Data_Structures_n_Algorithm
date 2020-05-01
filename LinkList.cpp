@@ -1,6 +1,5 @@
  #include <iostream>
 #include "LLTakeInput2.h"
-
 void findIthValue(Node *pNode, int i);
 int length(Node *head);
 void insertNode(Node *head,int position,int data);
@@ -11,6 +10,10 @@ Node* deleteNodeRecursive(Node *head,int position);
 int indexOfSearchedElement(Node *head,int n);
 Node* appendLL(Node* head,int position);
 Node* eliminateDuplicate(Node* head);
+void printReverseLL(Node* head);
+void printReverseLlRecursive(Node* head);
+bool checkPalindromeLL(Node* head);
+Node* midPointOfLL(Node* head);
 using namespace std;
 void  print(Node *n){
     Node *temp=n;
@@ -36,8 +39,62 @@ int main() {
         //It will take input in Order of n as there is no nested while loop.
     Node* head=takeInput2();
     print(head);
-    eliminateDuplicate(head);
-    print(head);
+    Node* midNode=midPointOfLL(head);
+    cout<<midNode->data;
+}
+ Node* midPointOfLL(Node* head){
+    Node* slow=head;
+    Node* fast=head->next;
+    while(fast!=NULL){
+        if(fast->next!=NULL){
+            fast=fast->next->next;
+            slow=slow->next;
+        }
+        else{
+            fast=fast->next;
+        }
+    }
+    return slow;
+}
+ bool checkPalindromeLL(Node* head){
+    Node* temp=head;
+    int size=recursiveLength(temp);
+    int *arr = new int[size];
+    int i=0;
+    while (temp!=NULL){
+        arr[i++]=temp->data;
+        temp=temp->next;
+    }
+    for(int j=0;j<size;j++){
+        if(arr[j]!=arr[size-1-j]){
+            delete []arr;
+            return false;
+        }
+    }
+    delete []arr;
+    return true;
+}
+ void printReverseLlRecursive(Node* head){
+    if(head==NULL){
+        return;
+    }
+    printReverseLlRecursive(head->next);
+    cout<<head->data<<" ";
+}
+ void printReverseLL(Node* head){
+    Node* temp=head;
+    int size=recursiveLength(temp);
+    int *arr = new int[size];
+    int i=0;
+    while(temp!=NULL){
+        arr[i++]=temp->data;
+        temp=temp->next;
+    }
+    for(int j=size-1;j>-1;j--){
+        cout<<arr[j]<<" ";
+    }
+    cout<<endl;
+    delete arr;
 }
 Node* eliminateDuplicate(Node* head){
     Node* forward=head->next;
