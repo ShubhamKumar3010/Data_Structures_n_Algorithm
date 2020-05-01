@@ -14,6 +14,7 @@ void printReverseLL(Node* head);
 void printReverseLlRecursive(Node* head);
 bool checkPalindromeLL(Node* head);
 Node* midPointOfLL(Node* head);
+Node* mergeTwoSortedLL(Node* head1,Node* head2);
 using namespace std;
 void  print(Node *n){
     Node *temp=n;
@@ -37,10 +38,42 @@ int main() {
         //It will take input in Order of n^2 as there is nested while loop.
         //Node* head=takeInput()
         //It will take input in Order of n as there is no nested while loop.
-    Node* head=takeInput2();
+    Node* head1=takeInput2();
+    Node* head2=takeInput2();
+    Node* head=mergeTwoSortedLL(head1,head2);
     print(head);
-    Node* midNode=midPointOfLL(head);
-    cout<<midNode->data;
+}
+ Node* mergeTwoSortedLL(Node* head1,Node* head2){
+    Node* newH=NULL;
+    Node* newT=NULL;
+    if(head1->data<head2->data){
+        newH=head1;
+        newT=head2;
+        head1=head1->next;
+    }
+    else{
+        newH=head2;
+        newT=head2;
+        head2=head2->next;
+    }
+    while(head1!=NULL && head2!=NULL){
+        if(head1->data<head2->data){
+            newT->next=head1;
+            newT=newT->next;
+            head1=head1->next;
+        }
+        else{
+            newT->next=head2;
+            newT=newT->next;
+            head2=head2->next;
+        }
+    }
+    if(head2!=NULL){
+        newT->next=head2;
+    }else{
+        newT->next=head1;
+    }
+    return newH;
 }
  Node* midPointOfLL(Node* head){
     Node* slow=head;
