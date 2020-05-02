@@ -15,6 +15,7 @@ void printReverseLlRecursive(Node* head);
 bool checkPalindromeLL(Node* head);
 Node* midPointOfLL(Node* head);
 Node* mergeTwoSortedLL(Node* head1,Node* head2);
+Node* mergeSort(Node* head);
 using namespace std;
 void  print(Node *n){
     Node *temp=n;
@@ -38,17 +39,40 @@ int main() {
         //It will take input in Order of n^2 as there is nested while loop.
         //Node* head=takeInput()
         //It will take input in Order of n as there is no nested while loop.
-    Node* head1=takeInput2();
-    Node* head2=takeInput2();
-    Node* head=mergeTwoSortedLL(head1,head2);
-    print(head);
+    Node* head=takeInput2();
+    Node* head1=mergeSort(head);
+    print(head1);
+}
+ Node* mergeSort(Node* head){
+    //merge sort is the concept which works on divide and conquer
+    Node* temp=head;
+    if(temp->next==NULL){
+        return temp;
+    }
+    //We divide the LL with concept of midpoint Finder as slow pointer will be midpoint.
+    Node* slow=temp;
+    Node* fast=temp->next;
+    while(fast!=NULL){
+        if(fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        else{
+            fast=fast->next;
+        }
+    }
+    Node* right=mergeSort(slow->next);
+    slow->next=NULL;
+    Node* left=mergeSort(temp);
+    Node* result=mergeTwoSortedLL(left,right);
+    return result;
 }
  Node* mergeTwoSortedLL(Node* head1,Node* head2){
     Node* newH=NULL;
     Node* newT=NULL;
     if(head1->data<head2->data){
         newH=head1;
-        newT=head2;
+        newT=head1;
         head1=head1->next;
     }
     else{
