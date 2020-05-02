@@ -16,6 +16,7 @@ bool checkPalindromeLL(Node* head);
 Node* midPointOfLL(Node* head);
 Node* mergeTwoSortedLL(Node* head1,Node* head2);
 Node* mergeSort(Node* head);
+ bool has_cycle(Node* head);
 using namespace std;
 void  print(Node *n){
     Node *temp=n;
@@ -34,15 +35,30 @@ int main() {
     n1.next=&n2;
     n2.next=&n3;
     n3.next=&n4;
-    n4.next=&n5;
-    print(&n1);
+    n4.next=&n1;
+//    print(&n1);
         //It will take input in Order of n^2 as there is nested while loop.
         //Node* head=takeInput()
         //It will take input in Order of n as there is no nested while loop.
-    Node* head=takeInput2();
-    Node* head1=mergeSort(head);
-    print(head1);
+        //Node* head=takeInput2()
+
 }
+ bool has_cycle(Node* head) {
+     if(head==NULL || head->next==NULL){
+         return 0;
+     }
+     Node* slow = head;
+     Node* fast = head->next;
+     while(fast!=NULL && fast->next!=NULL && slow!=NULL){
+         slow=slow->next;
+         fast=fast->next->next;
+         if(slow==fast){
+             return 1;
+         }
+     }
+     return 0;
+
+ }
  Node* mergeSort(Node* head){
     //merge sort is the concept which works on divide and conquer
     Node* temp=head;
