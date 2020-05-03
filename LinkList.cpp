@@ -1,5 +1,10 @@
  #include <iostream>
 #include "LLTakeInput2.h"
+class Pair {
+public:
+     Node *head;
+     Node *tail;
+ };
 void findIthValue(Node *pNode, int i);
 int length(Node *head);
 void insertNode(Node *head,int position,int data);
@@ -17,8 +22,13 @@ Node* midPointOfLL(Node* head);
 Node* mergeTwoSortedLL(Node* head1,Node* head2);
 Node* mergeSort(Node* head);
 bool has_cycle(Node* head);
-Node* reveresLL(Node* head);
+Node* reveresLL(Node* head); //This works on O(n)
 Node* reverseLL_Recursive(Node* head);
+Pair reverse2LL(Node* head);
+//We can use the concept of Doubly Link List also its has advantages over singly list as it contains address of
+//previous as well as next nodes.
+//Moreover it has advantages over Singly LinkList but one disadvantage is its memory consumption int takes 4 bytes
+//and Pointer is of 8 bytes total consumption in SinglyLL is 12 Bytes but as doublyLL has 2 pointers as next and previous it takes 20 bytes.
 using namespace std;
 void  print(Node *n){
     Node *temp=n;
@@ -43,8 +53,24 @@ int main() {
         //Node* head=takeInput()
         //It will take input in Order of n as there is no nested while loop.
         Node* head = takeInput2();
-        Node* head1 = reverseLL_Recursive(head);
+        Node* head1 = reveresLL(head);
         print(head1);
+}
+ Pair reverse2LL(Node* head){
+    //Whenever we need to return multiple parameters through a function we need to create a class and return object of that class.
+    if(head==NULL && head->next==NULL){
+        Pair ans;
+        ans.head=head;
+        ans.tail=head;
+        return ans;
+    }
+    Pair smallAns=reverse2LL(head->next);
+    smallAns.tail->next = head;
+    head->next=NULL;
+    Pair ans;
+    ans.head=smallAns.head;
+    ans.tail=smallAns.tail;
+    return ans;
 }
  Node* reverseLL_Recursive(Node* head){
     if(head==NULL || head->next==NULL){
