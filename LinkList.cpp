@@ -1,4 +1,4 @@
- #include <iostream>
+#include <iostream>
 #include "LLTakeInput2.h"
 class Pair {
 public:
@@ -25,6 +25,8 @@ bool has_cycle(Node* head);
 Node* reveresLL(Node* head); //This works on O(n)
 Node* reverseLL_Recursive(Node* head);
 Pair reverse2LL(Node* head);
+int indexOfSearchedElementRecursive(Node *head,int n);
+Node* arrangeLL_OddToEvenValues(Node* head);
 //We can use the concept of Doubly Link List also its has advantages over singly list as it contains address of
 //previous as well as next nodes.
 //Moreover it has advantages over Singly LinkList but one disadvantage is its memory consumption int takes 4 bytes
@@ -53,8 +55,69 @@ int main() {
         //Node* head=takeInput()
         //It will take input in Order of n as there is no nested while loop.
         Node* head = takeInput2();
-        Node* head1 = reveresLL(head);
-        print(head1);
+        Node* OddToEvenHead=arrangeLL_OddToEvenValues(head);
+        print(OddToEvenHead);
+}
+ Node* arrangeLL_OddToEvenValues(Node* head){
+    if(head==NULL && head->next==NULL){
+        return head;
+    }
+    Node* oddH = NULL;
+    Node* oddT = NULL;
+    Node* evenH = NULL;
+    Node* evenT = NULL;
+    while (head!=NULL){
+        if(head->data%2==0){
+            //It data is even.
+            if(evenH==NULL){
+                evenH=head;
+                evenT=head;
+            }
+            else{
+                evenT->next=head;
+                evenT=head;
+            }
+        }
+        else{
+            //If data is odd.
+            if(oddH==NULL){
+                oddH=head;
+                oddT=head;
+            }
+            else{
+                oddT->next=head;
+                oddT=head;
+            }
+        }
+        head=head->next;
+    }
+    if(evenH==NULL){
+        oddT->next=NULL;
+        return oddH;
+    }
+    else if(oddH==NULL){
+        evenT->next=NULL;
+        return evenH;
+    }else{
+        oddT->next=evenH;
+        evenT->next=NULL;
+        return oddH;
+    }
+}
+ int indexOfSearchedElementRecursive(Node *head,int n){
+    if(head==NULL){
+        return -1;
+    }
+    if(head->data==n){
+        return 0;
+    }
+    int ans=indexOfSearchedElement(head->next,n);
+    if(ans!=0) {
+        return ans + 1;
+    }
+    else{
+        return ans;
+    }
 }
  Pair reverse2LL(Node* head){
     //Whenever we need to return multiple parameters through a function we need to create a class and return object of that class.
