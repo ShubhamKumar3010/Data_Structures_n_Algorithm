@@ -16,7 +16,9 @@ bool checkPalindromeLL(Node* head);
 Node* midPointOfLL(Node* head);
 Node* mergeTwoSortedLL(Node* head1,Node* head2);
 Node* mergeSort(Node* head);
- bool has_cycle(Node* head);
+bool has_cycle(Node* head);
+Node* reveresLL(Node* head);
+Node* reverseLL_Recursive(Node* head);
 using namespace std;
 void  print(Node *n){
     Node *temp=n;
@@ -40,8 +42,33 @@ int main() {
         //It will take input in Order of n^2 as there is nested while loop.
         //Node* head=takeInput()
         //It will take input in Order of n as there is no nested while loop.
-        //Node* head=takeInput2()
-
+        Node* head = takeInput2();
+        Node* head1 = reverseLL_Recursive(head);
+        print(head1);
+}
+ Node* reverseLL_Recursive(Node* head){
+    if(head==NULL || head->next==NULL){
+        return head;
+    }
+    Node* temp=reverseLL_Recursive(head->next);
+    head->next->next=head;
+    head->next=NULL;
+    return temp;
+}
+ Node* reveresLL(Node* head){
+    if(head==NULL){
+        return head;
+    }
+    Node* prev = NULL;
+    Node* current = head;
+    Node* next = NULL;
+    while(current!=NULL){
+        next=current->next;
+        current->next=prev;
+        prev=current;
+        current=next;
+    }
+    return prev;
 }
  bool has_cycle(Node* head) {
      if(head==NULL || head->next==NULL){
