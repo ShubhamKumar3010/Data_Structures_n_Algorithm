@@ -27,6 +27,8 @@ Node* reverseLL_Recursive(Node* head);
 Pair reverse2LL(Node* head);
 int indexOfSearchedElementRecursive(Node *head,int n);
 Node* arrangeLL_OddToEvenValues(Node* head);
+void skipMdeleteN(Node* head, int m, int n); //i.e m is the step after which n node is to be deleted.
+Node* swap2Node(Node* head,int i,int j);
 //We can use the concept of Doubly Link List also its has advantages over singly list as it contains address of
 //previous as well as next nodes.
 //Moreover it has advantages over Singly LinkList but one disadvantage is its memory consumption int takes 4 bytes
@@ -55,8 +57,49 @@ int main() {
         //Node* head=takeInput()
         //It will take input in Order of n as there is no nested while loop.
         Node* head = takeInput2();
-        Node* OddToEvenHead=arrangeLL_OddToEvenValues(head);
-        print(OddToEvenHead);
+        skipMdeleteN(head, 1, 3);
+        print(head);
+}
+Node* swap2Node(Node* head,int i,int j){
+    Node* temp=head;
+    int count=0;
+    while(count!=min(i,j)){
+        count++;
+        temp=temp->next;
+    }
+    Node* firstNode=temp;
+    while(count!=max(i,j)){
+        count++;
+        temp=temp->next;
+    }
+    Node* secondNode=temp;
+    swap(firstNode->data,secondNode->data);
+    return head;
+}
+void skipMdeleteN(Node* head, int m, int n) {
+    Node *curr = head, *t;
+    int count;
+    while (curr) {
+        // Skip M nodes
+        for (count = 1; count < m && curr != NULL; count++) {
+            curr = curr->next;
+        }
+        // If we reached end of list, then return
+        if (curr == NULL) {
+            return;
+        }
+        // Start from next node and delete N nodes
+        t = curr->next;
+        for (count = 1; count <= n && t != NULL; count++) {
+            Node *temp = t;
+            t = t->next;
+            free(temp);
+        }
+        // Link the previous list with remaining nodes
+        curr->next = t;
+        // Set current pointer for next iteration
+        curr = t;
+    }
 }
  Node* arrangeLL_OddToEvenValues(Node* head){
     if(head==NULL && head->next==NULL){
