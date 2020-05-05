@@ -8,7 +8,7 @@ public:
 void findIthValue(Node *pNode, int i);
 int length(Node *head);
 void insertNode(Node *head,int position,int data);
-Node* deleteNode(Node *head, int position);
+Node* deleteNode(Node *head, int position); 
 int recursiveLength(Node *head);
 Node* insertNodeRecursive(Node *head,int position,int data);
 Node* deleteNodeRecursive(Node *head,int position);
@@ -27,8 +27,10 @@ Node* reverseLL_Recursive(Node* head);
 Pair reverse2LL(Node* head);
 int indexOfSearchedElementRecursive(Node *head,int n);
 Node* arrangeLL_OddToEvenValues(Node* head);
-void skipMdeleteN(Node* head, int m, int n); //i.e m is the step after which n node is to be deleted.
+void skipMDeleteN(Node* head, int m, int n); //i.e m is the step after which n node is to be deleted.
 Node* swap2Node(Node* head,int i,int j);
+Node* kReverse(Node* head,int k);
+int findMergeNode(Node* head1,Node* head2);
 //We can use the concept of Doubly Link List also its has advantages over singly list as it contains address of
 //previous as well as next nodes.
 //Moreover it has advantages over Singly LinkList but one disadvantage is its memory consumption int takes 4 bytes
@@ -57,8 +59,43 @@ int main() {
         //Node* head=takeInput()
         //It will take input in Order of n as there is no nested while loop.
         Node* head = takeInput2();
-        skipMdeleteN(head, 1, 3);
-        print(head);
+        Node* head1=kReverse(head, 3);
+        print(head1);
+}
+int findMergeNode(Node* head1,Node* head2){
+    Node* temp=head2;
+    int a;
+    while(head1!= NULL){
+        while(head2!= NULL){
+            if(head1==head2){
+                a=head1->data;
+                return a;
+            }
+            else{
+                head2=head2->next;
+            }
+        }
+        head2=temp;
+        head1=head1->next;
+    }
+    return a;
+}
+Node* kReverse(Node* head,int k){
+    Node* current=head;
+    Node* prev=NULL;
+    Node* next=NULL;
+    int count=0;
+    while(current!=NULL && count<k){
+        next=current->next;
+        current->next=prev;
+        prev=current;
+        current=next;
+        count++;
+    }
+    if(next!=NULL){
+        head->next=kReverse(next,k);
+    }
+    return prev;
 }
 Node* swap2Node(Node* head,int i,int j){
     Node* temp=head;
@@ -76,7 +113,7 @@ Node* swap2Node(Node* head,int i,int j){
     swap(firstNode->data,secondNode->data);
     return head;
 }
-void skipMdeleteN(Node* head, int m, int n) {
+void skipMDeleteN(Node* head, int m, int n) {
     Node *curr = head, *t;
     int count;
     while (curr) {
