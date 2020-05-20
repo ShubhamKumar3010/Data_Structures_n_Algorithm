@@ -2,9 +2,8 @@
 #include <queue>
 #include "QueueUsingArray.h"
 #include "QueueUsingLL.h"
-
 using namespace std;
-
+void reverseQueue(queue<int>& q);
 int main() {
     //Array Queue
     QueueUsingArray<int> a(10);
@@ -51,9 +50,17 @@ int main() {
     queue<int> q;
     q.push(10);
     q.push(20);
-    cout << q.size() << endl;
-    q.pop();
-    cout << q.size() << endl;
-    cout << q.empty() << endl;
+    q.push(30);
     cout << q.front() << endl;
+    reverseQueue(q);
+    cout << q.front() <<endl;
+}
+void reverseQueue(queue<int>& q){
+    if(q.size()<=1){
+        return;
+    }
+    int front  = q.front();
+    q.pop();
+    reverseQueue(q);
+    q.push(front);
 }

@@ -6,6 +6,8 @@
 #include "StackUsingLL.h"
 using namespace std;
 bool checkBalanced(char *exp);
+void reverseStack(stack<int> &input,stack<int> &extra);
+bool checkRedundantBracket(char *input);
 int main(){
     //Implementation of Stack Using Array
     StackUsingArray s(5);
@@ -54,7 +56,30 @@ int main(){
 
     //Check Balanced Parenthesis.
     char *a="{a+[b+(c+d)]+(e+f)}";
-    cout<<"Equation is balanced or not:"<<checkBalanced(a);
+    cout<<"Equation is balanced or not:"<<checkBalanced(a)<<endl;
+    stack<int> s4;
+    reverseStack(s3,s4);
+    cout<<s3.top();
+}
+bool checkRedundantBracket(char *input){
+}
+void reverseStack(stack<int> &input,stack<int> &extra){
+    if(input.empty()){
+        return;
+    }
+    int temp = input.top();
+    input.pop();
+    reverseStack(input,extra);
+    while(!input.empty()){
+        extra.push(input.top());
+        input.pop();
+    }
+    input.push(temp);
+    while(!extra.empty()){
+        input.push(extra.top());
+        extra.pop();
+    }
+    return;
 }
 bool checkBalanced(char *exp){
     stack<char> s;
