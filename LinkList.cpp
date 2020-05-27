@@ -1,10 +1,13 @@
 #include <iostream>
+#include <queue>
+#include <vector>
 #include "LLTakeInput2.h"
 class Pair {
 public:
      Node *head;
      Node *tail;
  };
+void  print(Node *n);
 void findIthValue(Node *pNode, int i);
 int length(Node *head);
 void insertNode(Node *head,int position,int data);
@@ -31,11 +34,24 @@ void skipMDeleteN(Node* head, int m, int n); //i.e m is the step after which n n
 Node* swap2Node(Node* head,int i,int j);
 Node* kReverse(Node* head,int k);
 int findMergeNode(Node* head1,Node* head2);
+Node* addTwoNumbers(Node* l1,Node* l2);
 //We can use the concept of Doubly Link List also its has advantages over singly list as it contains address of
 //previous as well as next nodes.
 //Moreover it has advantages over Singly LinkList but one disadvantage is its memory consumption int takes 4 bytes
 //and Pointer is of 8 bytes total consumption in SinglyLL is 12 Bytes but as doublyLL has 2 pointers as next and previous it takes 20 bytes.
 using namespace std;
+int main() {
+        Node* head = takeInput2();
+        Node* head1=takeInput2();
+        Node* out=addTwoNumbers(head,head1);
+        print(out);
+}
+//You are given two non-empty linked lists representing two non-negative integers.
+//The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+//You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+Node* addTwoNumbers(Node* l1,Node* l2){
+
+}
 void  print(Node *n){
     Node *temp=n;
     while (temp->next!=NULL){
@@ -43,24 +59,6 @@ void  print(Node *n){
         temp=temp->next;
     }
     cout<<temp->data<<endl;
-}
-int main() {
-    Node n1(10);
-    Node n2(20);
-    Node n3(30);
-    Node n4(40);
-    Node n5(50);
-    n1.next=&n2;
-    n2.next=&n3;
-    n3.next=&n4;
-    n4.next=&n1;
-//    print(&n1);
-        //It will take input in Order of n^2 as there is nested while loop.
-        //Node* head=takeInput()
-        //It will take input in Order of n as there is no nested while loop.
-        Node* head = takeInput2();
-        Node* head1=kReverse(head, 3);
-        print(head1);
 }
 int findMergeNode(Node* head1,Node* head2){
     Node* temp=head2;
