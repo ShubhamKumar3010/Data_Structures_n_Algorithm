@@ -19,12 +19,55 @@ string addBinary(string a, string b);
 int addDigits(int num);
 string addStrings(string num1, string num2);
 vector<int> addToArrayForm(vector<int>& A, int K);
+int findContentChildren(vector<int>& g, vector<int>& s);
+int arrangeCoins(int n);
 int main(){
-    vector<int> v {9,9,9,9,9,9,9,9,9,9};
-    vector<int> out =addToArrayForm(v,1);
-    for(int i=0;i<out.size();i++){
-        cout<<out[i]<<endl;
+  vector<int> g {1,2,3};
+  vector<int> s {3};
+  int a = findContentChildren(g,s);
+}
+//Assume you are an awesome parent and want to give your children some cookies. But, you should give each child at most one cookie.
+// Each child i has a greed factor gi, which is the minimum size of a cookie that the child will be content with; and each cookie j has a size sj.
+// If sj >= gi, we can assign the cookie j to the child i, and the child i will be content.
+// Your goal is to maximize the number of your content children and output the maximum number.
+//Input: [1,2,3], [1,1]
+//Output: 1
+int findContentChildren(vector<int>& g, vector<int>& s) {
+        sort(g.begin(),g.end());
+        sort(s.begin(),s.end());
+        int count=0;
+        for(int i=0;i<g.size();i++){
+            for(int j=0;j<s.size();j++){
+                if(s[j]>=g[i] && s[j]>0){
+                    count++;
+                    s[j]=-1;
+                    break;
+                }
+            }
+        }
+        return count;
     }
+//You have a total of n coins that you want to form in a staircase shape, where every k-th row must have exactly k coins.
+//Given n, find the total number of full staircase rows that can be formed.
+//n is a non-negative integer and fits within the range of a 32-bit signed integer.
+int arrangeCoins(int n) {
+    if(n==1){
+        return 1;
+    }
+    int i=0;
+    int count=1;
+    while(n>0){
+        n = n - count;
+        if(n>0){
+            i++;
+            count++;
+        }else if(n==0){
+            return i+1;
+        }else{
+            return i;
+        }
+    }
+    return 0;
 }
 //For a non-negative integer X, the array-form of X is an array of its digits in left to right order.  For example, if X = 1231, then the array form is [1,2,3,1].
 //Given the array-form A of a non-negative integer X, return the array-form of the integer X+K.
